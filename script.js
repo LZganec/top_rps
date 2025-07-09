@@ -1,3 +1,4 @@
+// this function generates the computer's choice
 function getComputerChoice() {
   let randomInt = Math.floor(Math.random() * 3) + 1;
   switch (randomInt) {
@@ -13,26 +14,34 @@ function getComputerChoice() {
   }
 }
 
+// prompts the player for their choice
 function getHumanChoice() {
   return prompt("Please enter your choice: ");
 }
 
+// scoreboard
 let humanScore = 0;
 let computerScore = 0;
 
+// play a round of RPS
 function playRound(humanChoice, computerChoice) {
+  // lower cases the choices to match
   humanChoice = humanChoice.toLowerCase();
   computerChoice = computerChoice.toLowerCase();
 
+  // compares the choices and returns a result
   function getResult() {
+    // status messages
+    let victoryMessage = `You have won, ${humanChoice} beats ${computerChoice}!`;
+    let lossMessage = `You have lost, ${computerChoice} beats ${humanChoice}!`;
+
+    // draw
     if (humanChoice === computerChoice) {
       console.log("It's a draw!");
       return;
     }
 
-    let victoryMessage = `You have won, ${humanChoice} beats ${computerChoice}!`;
-    let lossMessage = `You have lost, ${computerChoice} beats ${humanChoice}!`;
-
+    // handles the scoring and logs the status, the else statement is possible because we exit the function if it's a draw
     switch (humanChoice) {
       case "rock":
         if (computerChoice === "scissors") {
@@ -66,17 +75,22 @@ function playRound(humanChoice, computerChoice) {
   getResult();
 }
 
-function playGame() {
+// play a game of RPS for multiple rounds
+function playGame(numberOfRoundsWon) {
   do {
+    // prompts the user for their choice for each round, selects a new choice for the computer as well
     let computerSelection = getComputerChoice();
     let humanSelection = getHumanChoice();
+
+    // plays a round
     playRound(humanSelection, computerSelection);
     console.log(
       `The score is: human: ${humanScore} - computer: ${computerScore}`
     );
-  } while (humanScore < 5 && computerScore < 5);
+    // does this until one of the scores reaches the input number of victories
+  } while (humanScore < numberOfRoundsWon && computerScore < numberOfRoundsWon);
   function getWinner() {
-    if (humanScore === 5) {
+    if (humanScore === numberOfRoundsWon) {
       return "Human";
     } else return "Computer";
   }
@@ -85,4 +99,4 @@ function playGame() {
   console.log(`The winner is: ${theWinner}`);
 }
 
-playGame();
+playGame(3);
