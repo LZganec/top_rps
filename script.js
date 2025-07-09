@@ -17,9 +17,6 @@ function getHumanChoice() {
   return prompt("Please enter your choice: ");
 }
 
-let computerSelection = getComputerChoice();
-let humanSelection = getHumanChoice();
-
 let humanScore = 0;
 let computerScore = 0;
 
@@ -69,5 +66,23 @@ function playRound(humanChoice, computerChoice) {
   getResult();
 }
 
-playRound(humanSelection, computerSelection);
-console.log(`The score is: human: ${humanScore} - computer: ${computerScore}`);
+function playGame() {
+  do {
+    let computerSelection = getComputerChoice();
+    let humanSelection = getHumanChoice();
+    playRound(humanSelection, computerSelection);
+    console.log(
+      `The score is: human: ${humanScore} - computer: ${computerScore}`
+    );
+  } while (humanScore < 5 && computerScore < 5);
+  function getWinner() {
+    if (humanScore === 5) {
+      return "Human";
+    } else return "Computer";
+  }
+
+  let theWinner = getWinner();
+  console.log(`The winner is: ${theWinner}`);
+}
+
+playGame();
